@@ -104,6 +104,8 @@ static const luaL_Reg lualibs[] = {
     {"debug", luaopen_debug},
     {"unicode", luaopen_unicode},
     {"zip", luaopen_zip},
+    {"lpeg", luaopen_lpeg},
+	{"xmlreader", luaopen_xmlreader},
     {"md5", luaopen_md5},
     {"lfs", luaopen_lfs},
     {"profiler", luaopen_profiler},

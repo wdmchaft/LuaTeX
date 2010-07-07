@@ -342,6 +342,7 @@ libluamisc_a_LIBADD =
 am_libluamisc_a_OBJECTS = libluamisc_a-lfs.$(OBJEXT) \
 	libluamisc_a-md5.$(OBJEXT) libluamisc_a-md5lib.$(OBJEXT) \
 	libluamisc_a-md5_lua.$(OBJEXT) libluamisc_a-lpeg.$(OBJEXT) \
+	libluamisc_a-error.$(OBJEXT) libluamisc_a-xmlreader.$(OBJEXT) \
 	libluamisc_a-clocks.$(OBJEXT) \
 	libluamisc_a-core_profiler.$(OBJEXT) \
 	libluamisc_a-function_meter.$(OBJEXT) \
@@ -1849,7 +1850,7 @@ luatex_ldadd = libluatex.a libff.a libluamisc.a libluasocket.a \
 	liblua51.a libmd5.a libmplib.a $(CAIRO_LIBS) $(PIXMAN_LIBS) \
 	$(ZZIPLIB_LIBS) $(LIBPNG_LIBS) $(ZLIB_LIBS) $(POPPLER_LIBS)
 luatex_LDFLAGS = -export-dynamic
-luatex_LDADD = $(luatex_ldadd) $(LDADD) $(LIBADD_DLOPEN) $(lua_socketlibs)
+luatex_LDADD = $(luatex_ldadd) $(LDADD) $(LIBADD_DLOPEN) $(lua_socketlibs) -lxml2
 luatex_DEPENDENCIES = $(proglib) $(KPATHSEA_DEPEND) libluatex.a \
 	$(LIBPNG_DEPEND) $(ZLIB_DEPEND) $(POPPLER_DEPEND) libmd5.a \
 	libmplib.a
@@ -1957,7 +1958,8 @@ libluamisc_a_DEPENDENCIES = $(ZZIPLIB_DEPEND) libluasocket.a
 libluamisc_a_CPPFLAGS = \
 	$(ZLIB_INCLUDES) \
 	$(ZZIPLIB_INCLUDES) \
-	-I$(top_srcdir)/luatexdir/lua51
+	-I$(top_srcdir)/luatexdir/lua51 \
+	-I/usr/include/libxml2
 
 libluamisc_a_CFLAGS = # $(WARNING_CFLAGS)
 libluamisc_a_SOURCES = \
@@ -1969,6 +1971,9 @@ libluamisc_a_SOURCES = \
 	luatexdir/luamd5/md5_lua.c \
 	luatexdir/luapeg/lpeg.c \
 	luatexdir/luapeg/lpeg.h \
+    luatexdir/lua-xmlreader-0.1/error.c \
+    luatexdir/lua-xmlreader-0.1/error.h \
+    luatexdir/lua-xmlreader-0.1/xmlreader.c \
 	luatexdir/luaprofiler/clocks.c \
 	luatexdir/luaprofiler/clocks.h \
 	luatexdir/luaprofiler/core_profiler.c \
@@ -2919,6 +2924,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liblua51_a-lzio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-clocks.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-core_profiler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-error.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-function_meter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-lfs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-lgzip.Po@am__quote@
@@ -2932,6 +2938,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-slnudata.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-slnunico.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-stack.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluamisc_a-xmlreader.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluasocket_a-auxiliar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluasocket_a-buffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libluasocket_a-except.Po@am__quote@
@@ -4451,6 +4458,34 @@ libluamisc_a-lpeg.obj: luatexdir/luapeg/lpeg.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='luatexdir/luapeg/lpeg.c' object='libluamisc_a-lpeg.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -c -o libluamisc_a-lpeg.obj `if test -f 'luatexdir/luapeg/lpeg.c'; then $(CYGPATH_W) 'luatexdir/luapeg/lpeg.c'; else $(CYGPATH_W) '$(srcdir)/luatexdir/luapeg/lpeg.c'; fi`
+
+libluamisc_a-error.o: luatexdir/lua-xmlreader-0.1/error.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -MT libluamisc_a-error.o -MD -MP -MF $(DEPDIR)/libluamisc_a-error.Tpo -c -o libluamisc_a-error.o `test -f 'luatexdir/lua-xmlreader-0.1/error.c' || echo '$(srcdir)/'`luatexdir/lua-xmlreader-0.1/error.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libluamisc_a-error.Tpo $(DEPDIR)/libluamisc_a-error.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='luatexdir/lua-xmlreader-0.1/error.c' object='libluamisc_a-error.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -c -o libluamisc_a-error.o `test -f 'luatexdir/lua-xmlreader-0.1/error.c' || echo '$(srcdir)/'`luatexdir/lua-xmlreader-0.1/error.c
+
+libluamisc_a-error.obj: luatexdir/lua-xmlreader-0.1/error.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -MT libluamisc_a-error.obj -MD -MP -MF $(DEPDIR)/libluamisc_a-error.Tpo -c -o libluamisc_a-error.obj `if test -f 'luatexdir/lua-xmlreader-0.1/error.c'; then $(CYGPATH_W) 'luatexdir/lua-xmlreader-0.1/error.c'; else $(CYGPATH_W) '$(srcdir)/luatexdir/lua-xmlreader-0.1/error.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libluamisc_a-error.Tpo $(DEPDIR)/libluamisc_a-error.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='luatexdir/lua-xmlreader-0.1/error.c' object='libluamisc_a-error.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -c -o libluamisc_a-error.obj `if test -f 'luatexdir/lua-xmlreader-0.1/error.c'; then $(CYGPATH_W) 'luatexdir/lua-xmlreader-0.1/error.c'; else $(CYGPATH_W) '$(srcdir)/luatexdir/lua-xmlreader-0.1/error.c'; fi`
+
+libluamisc_a-xmlreader.o: luatexdir/lua-xmlreader-0.1/xmlreader.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -MT libluamisc_a-xmlreader.o -MD -MP -MF $(DEPDIR)/libluamisc_a-xmlreader.Tpo -c -o libluamisc_a-xmlreader.o `test -f 'luatexdir/lua-xmlreader-0.1/xmlreader.c' || echo '$(srcdir)/'`luatexdir/lua-xmlreader-0.1/xmlreader.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libluamisc_a-xmlreader.Tpo $(DEPDIR)/libluamisc_a-xmlreader.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='luatexdir/lua-xmlreader-0.1/xmlreader.c' object='libluamisc_a-xmlreader.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -c -o libluamisc_a-xmlreader.o `test -f 'luatexdir/lua-xmlreader-0.1/xmlreader.c' || echo '$(srcdir)/'`luatexdir/lua-xmlreader-0.1/xmlreader.c
+
+libluamisc_a-xmlreader.obj: luatexdir/lua-xmlreader-0.1/xmlreader.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -MT libluamisc_a-xmlreader.obj -MD -MP -MF $(DEPDIR)/libluamisc_a-xmlreader.Tpo -c -o libluamisc_a-xmlreader.obj `if test -f 'luatexdir/lua-xmlreader-0.1/xmlreader.c'; then $(CYGPATH_W) 'luatexdir/lua-xmlreader-0.1/xmlreader.c'; else $(CYGPATH_W) '$(srcdir)/luatexdir/lua-xmlreader-0.1/xmlreader.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libluamisc_a-xmlreader.Tpo $(DEPDIR)/libluamisc_a-xmlreader.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='luatexdir/lua-xmlreader-0.1/xmlreader.c' object='libluamisc_a-xmlreader.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -c -o libluamisc_a-xmlreader.obj `if test -f 'luatexdir/lua-xmlreader-0.1/xmlreader.c'; then $(CYGPATH_W) 'luatexdir/lua-xmlreader-0.1/xmlreader.c'; else $(CYGPATH_W) '$(srcdir)/luatexdir/lua-xmlreader-0.1/xmlreader.c'; fi`
 
 libluamisc_a-clocks.o: luatexdir/luaprofiler/clocks.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libluamisc_a_CPPFLAGS) $(CPPFLAGS) $(libluamisc_a_CFLAGS) $(CFLAGS) -MT libluamisc_a-clocks.o -MD -MP -MF $(DEPDIR)/libluamisc_a-clocks.Tpo -c -o libluamisc_a-clocks.o `test -f 'luatexdir/luaprofiler/clocks.c' || echo '$(srcdir)/'`luatexdir/luaprofiler/clocks.c
