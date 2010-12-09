@@ -48,9 +48,9 @@ and four environment variables:
 
 @c
 const_string LUATEX_IHELP[] = {
-    "Usage: luatex --lua=FILE [OPTION]... [TEXNAME[.tex]] [COMMANDS]",
-    "   or: luatex --lua=FILE [OPTION]... \\FIRST-LINE",
-    "   or: luatex --lua=FILE [OPTION]... &FMT ARGS",
+    "Usage: sdluatex --lua=FILE [OPTION]... [TEXNAME[.tex]] [COMMANDS]",
+    "   or: sdluatex --lua=FILE [OPTION]... \\FIRST-LINE",
+    "   or: sdluatex --lua=FILE [OPTION]... &FMT ARGS",
     "  Run LuaTeX on TEXNAME, usually creating TEXNAME.pdf.",
     "  Any remaining COMMANDS are processed as luatex input, after TEXNAME is read.",
     "",
@@ -345,7 +345,11 @@ static void parse_options(int ac, char **av)
                  "the terms of the GNU General Public License, version 2. For more\n"
                  "information about these matters, see the file named COPYING and\n"
                  "the LuaTeX source.\n\n" 
-                 "Copyright 2011 Taco Hoekwater, the LuaTeX Team.\n");
+                 "Copyright 2011 Taco Hoekwater, the LuaTeX Team.\n\n"
+				 "This is a patched version and differs from the original:\n"
+				 "Included is the XML reader Library\n"
+				 "  (http://asbradbury.org/projects/lua-xmlreader/)\n"
+				 "See https://github.com/pgundlach/LuaTeX for details of the patch.\n");
             /* *INDENT-ON* */
             uexit(0);
         } else if (ARGUMENT_IS("credits")) {
@@ -369,7 +373,11 @@ static void parse_options(int ac, char **av)
                  "Some extensions to lua and additional lua libraries are used, as well as\n" 
                  "libraries for graphic inclusion. More details can be found in the source.\n" 
                  "Code development was sponsored by a grant from Colorado State University\n" 
-                 "via the 'oriental tex' project, the TeX User Groups, and donations.\n");
+                 "via the 'oriental tex' project, the TeX User Groups, and donations.\n\n"
+				 "This is a patched version and differs from the original:\n"
+				 "Included is the XML reader Library\n"
+				 "  (http://asbradbury.org/projects/lua-xmlreader/)\n"
+				 "See https://github.com/pgundlach/LuaTeX for details of the patch.\n");
             /* *INDENT-ON* */
             puts(versions);
             uexit(0);
@@ -782,7 +790,7 @@ void lua_initialize(int ac, char **av)
     argv = av;
 
     if (luatex_svn < 0) {
-        const char *fmt = "This is LuaTeX, Version %s-%s" WEB2CVERSION;
+        const char *fmt = "This is SDLuaTeX, Version %s-%s" WEB2CVERSION;
         size_t len;
         char buf[16];
         sprintf(buf, "%d", luatex_date_info);
@@ -793,7 +801,7 @@ void lua_initialize(int ac, char **av)
         banner = xmalloc(len);
         sprintf(banner, fmt, luatex_version_string, buf);
     } else {
-        const char *fmt = "This is LuaTeX, Version %s-%s " WEB2CVERSION "(rev %d)";
+        const char *fmt = "This is SDLuaTeX, Version %s-%s " WEB2CVERSION "(rev %d)";
         size_t len;
         char buf[16];
         sprintf(buf, "%d", luatex_date_info);

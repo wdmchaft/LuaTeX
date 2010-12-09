@@ -84,6 +84,8 @@ done
 #
 STRIP=strip
 LUATEXEXE=luatex
+PATCHLUATEXEXE=sdluatex
+
 
 case `uname` in
   MINGW32*    ) LUATEXEXE=luatex.exe ;;
@@ -208,4 +210,5 @@ then
 fi
 
 # show the results
-ls -l "$B"/texk/web2c/$LUATEXEXE
+mv "$B"/texk/web2c/$LUATEXEXE "$B"/texk/web2c/$PATCHLUATEXEXE
+ls -l "$B"/texk/web2c/$PATCHLUATEXEXE
