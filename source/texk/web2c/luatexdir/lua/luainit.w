@@ -239,7 +239,7 @@ static void parse_options(int ac, char **av)
     char *firstfile = NULL;
     opterr = 0;                 /* dont whine */
     if ((strstr(argv[0], "luatexlua") != NULL) ||
-        (strstr(argv[0], "texlua") != NULL)) {
+        (strstr(argv[0], "sdtexlua") != NULL)) {
         lua_only = 1;
         luainit = 1;
     }
